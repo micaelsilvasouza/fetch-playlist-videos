@@ -40,85 +40,13 @@
         <input id="idplaylist" type="text" title="ID da playlist" placeholder="ID da playlist">
         <input id="idcourse" type="text" title="ID do curso" placeholder="ID do curso">
         <button onclick="searchVideos()">Buscar Videos</button>
-        <button onclick="(navigator.clipboard.writeText(JSON.stringify(obj)).then(()=>alert('Videos copiados')))">Copiar Videos</button>
+        <button onclick="copyVideos()">Copiar Videos</button>
     </div>
 
     <section id="videos">
     </section>
 
 
-    <script>
-        //id client 593215396622-f6615g28imqq6m9c4943rvg5e11nmv6q.apps.googleusercontent.com
-        //key api AIzaSyBBCL8YAHFkaR1IuUb1-kv_ZVaUXDia0pg
-
-        const section = document.querySelector("#videos")
-        const obj = []
-
-        function searchVideos() {
-            let playlist = document.querySelector("#idplaylist").value
-            console.log("indo Buscar")
-            fteste(playlist)
-        }
-
-        async function fteste(id) {
-            console.log("Foi buscar")
-            const BASE_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
-            const API_KEY = "AIzaSyBBCL8YAHFkaR1IuUb1-kv_ZVaUXDia0pg"
-
-             const params = new URLSearchParams({
-                part: 'snippet', // Quais informações você quer (snippet para título, descrição, thumbnail etc.)
-                playlistId: id, //id da playlist,
-                maxResults: 50, //numero maximo de resultados
-                key: API_KEY     // Sua chave de API
-            });
-
-            const response = await fetch(`${BASE_URL}?${params.toString()}`)
-            const data = await response.json()
-
-            console.log(data)
-
-            data.items.forEach((video, id) => {
-                const snippet = video.snippet
-
-                obj[id] = {}
-                obj[id].course = document.querySelector("#idcourse").value
-                obj[id].order = id
-                obj[id].slug = getSlug(snippet.title)
-                obj[id].title = snippet.title
-                obj[id].description = snippet.description
-                obj[id].image = snippet.thumbnails.medium.url
-                obj[id].video = `https://www.youtube.com/embed/${snippet.resourceId.videoId}`
-
-                createVideo(snippet.title, snippet.description, snippet.thumbnails.medium.url)
-            });
-            
-        }
-
-        function createVideo(title, description, url) {
-            const conteiner = document.createElement("div")
-            const div = document.createElement("div")
-            const h1 = document.createElement("h1")
-            const p = document.createElement("p")
-            const img = document.createElement("img")
-
-            h1.textContent = title
-            p.textContent = description.slice(0,300) + "..."
-            img.src = url
-
-            div.appendChild(h1)
-            div.appendChild(p)
-
-            conteiner.appendChild(img)
-            conteiner.appendChild(div)
-            conteiner.className = "conteiner-video"
-
-            section.appendChild(conteiner)
-        }
-
-        function getSlug(title) {
-            slug = title.toLowerCase().replaceAll("(", "").replaceAll(")", "").replaceAll(" ", "-").replace(/---@.*/,"")
-            return slug
-        }
-    </script>
+    <script src="teste.js"></script>
 </body>
 </html>
