@@ -13,6 +13,8 @@ function searchVideos() {
     let playlist = document.querySelector("#idplaylist").value
     let course = document.querySelector("#idcourse").value
 
+    section.innerHTML = ""
+
     if(playlist == ""){
         alert("Adicone o id da playlist")
         return
